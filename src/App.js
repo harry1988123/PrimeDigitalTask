@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createPostAction, getSelectedShapeList, getSelectedSizeList, getSelectedColorList, SearchResult  } from './Actions/index';
 import { Input, Space, Checkbox } from 'antd';
@@ -14,7 +14,7 @@ const App = ()=>{
   const [SelectedShapeList, SetShape] = useState([]);
   const [outPutResult, setOutPutResult] = useState([]);
   function onSearch(value){
-    setSearchText(value); PostRequest();
+    setSearchText(value); //PostRequest();
   }
   const { Search } = Input; 
   let colorList = [];
@@ -41,18 +41,18 @@ const App = ()=>{
 
   function onChangeColor(checkedValues) { 
     SetColors(checkedValues); 
-    PostRequest();
+    //PostRequest();
   }
 
   function onChangeShape(checkedValues){ 
     SetShape(checkedValues); 
-    PostRequest();
+    //PostRequest();
   }
 
   const [SelectedSizeList, SetSize] = useState([]);
   function onChangeSize(checkedValues){ 
     SetSize(checkedValues); 
-    PostRequest();
+    //PostRequest();
   }
   function PostRequest(){ 
     const postData ={
@@ -66,6 +66,10 @@ const App = ()=>{
     console.log(myState.searchResult); 
     setOutPutResult(myState.searchResult)
   } 
+
+  useEffect(() =>{ 
+    PostRequest()
+  },[SearchText,SelectedColorList,SelectedShapeList,SelectedSizeList]);
 
  return (
    <>
