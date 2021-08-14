@@ -1,18 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { incNumber, decNumber, createPostAction  } from './Actions/index';
+import { createPostAction, getSelectedShapeList, getSelectedSizeList, getSelectedColorList, SearchResult  } from './Actions/index';
 import { Input, Space, Checkbox } from 'antd';
 import { AudioOutlined } from '@ant-design/icons';
 import store from './store';
+import _ from 'lodash';
 
 const App = ()=>{
-
   const myState = useSelector((state) => state.fetchThings); 
   const dispatch = useDispatch();
-  let SearchText = "";
-  const onSearch = value => {console.log(value); SearchText = value; PostRequest(); }
+  const [SearchText, setSearchText] = useState("");
+  const [SelectedColorList, SetColors] = useState([]);
+  const [SelectedShapeList, SetShape] = useState([]);
+  const [outPutResult, setOutPutResult] = useState([]);
+  function onSearch(value){
+    setSearchText(value); PostRequest();
+  }
   const { Search } = Input; 
-
   let colorList = [];
   let sizeList = [];
   let shapeList = [];
@@ -35,44 +39,37 @@ const App = ()=>{
     });
   }
 
-  let SelectedColorList = [];
   function onChangeColor(checkedValues) { 
-    SelectedColorList = checkedValues;
+    SetColors(checkedValues); 
+    PostRequest();
   }
-  let SelectedShapeList = [];
+
   function onChangeShape(checkedValues){ 
-    SelectedShapeList = checkedValues;
+    SetShape(checkedValues); 
+    PostRequest();
   }
-  let SelectedSizeList = [];
+
+  const [SelectedSizeList, SetSize] = useState([]);
   function onChangeSize(checkedValues){ 
-    SelectedSizeList = checkedValues;
+    SetSize(checkedValues); 
+    PostRequest();
   }
-  let outPutResult = [];
-  function PostRequest(){
+  function PostRequest(){ 
     const postData ={
       'searchText': SearchText,
       'colorId': SelectedColorList,
       'shapeId': SelectedShapeList,
       'sizeId': SelectedSizeList
-    }
-    dispatch(createPostAction(postData,outPutResult));
+    }    
+    dispatch(createPostAction(postData));
     store.dispatch({type: 'SEARCH_RESULT'}); 
-    console.log(myState.searchResult);
-    outPutResult = myState.searchResult;
-  }
+    console.log(myState.searchResult); 
+    setOutPutResult(myState.searchResult)
+  } 
 
  return (
    <>
-    <div className="container"> 
-        {/* <h1>Increament/Decreament counter</h1>
-        <h4>Using React and Redux</h4>
-
-        <div className="quantity">
-            <a className="quantity__minus" title="Decrement" onClick= { () => dispatch(decNumber()) } ><span>-</span></a>
-            <input name="quantity" type="text" className="quantity__input" value={ myState }/>
-            <a className="quantity__plus" title="Increment" onClick= { () => dispatch(incNumber(5)) }><span>+</span></a>
-        </div> */}
-
+    <div className="container">  
         <div className="top"> 
             <Space direction="vertical">
               <Search placeholder="Input search text" onSearch={onSearch} enterButton size="large"  style={{ width: 978 }}  />
@@ -102,14 +99,11 @@ const App = ()=>{
               <div className="result-container">
                 {
                   myState.searchResult != undefined ?  myState.searchResult.map(result => (<div className="outer-div-container"><div className="result-name"> { result.name } </div> 
-                  <div className="secondary-text"> Earth have Blue color and Round shape </div></div>)) : ""
+                  <div className="secondary-text"> { result.name } have Blue color and Round shape </div></div>)) : ""
                 }
               </div>
           </div>
         </div>
-
-        
-        
 
     </div>
    </>

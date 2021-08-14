@@ -2,19 +2,6 @@ import axios from "axios";
 import { func } from "prop-types";
 import configData  from "../config.json";
 
-export const incNumber = (num) =>{
-    return{
-        type: "INCREMENT",
-        payload: num
-    }
-}
-
-export const decNumber = () =>{
-    return{
-        type: "DECREMENT"
-    }
-}
-
 export function loadColor(){
     console.log(configData.SERVER_URL);
     return(dispatch)=>{
@@ -88,11 +75,10 @@ export function planetList(planet){
     }
 }
 
-export function createPostAction(postData,outPutResult){
+export function createPostAction(postData){
     return dispatch => {
         createPost(postData).then(response => {
-            console.log(response.data);
-            outPutResult = response.data;
+            console.log(response.data); 
             dispatch(SearchResult(response.data));
         });
     }
@@ -105,7 +91,38 @@ export function SearchResult(response){
     }
 }
 
-export function createPost(postData){
-    //return axios.get( configData.SERVER_URL + `/planets?q=`+ postData.searchText + `&color=`+ postData.colorId.toString() + `&shape=` + postData.shapeId.toString() +`&size=` + postData.sizeId.toString())
-    return axios.get( configData.SERVER_URL + `/planets?q=`+ postData.searchText)
+export function getSelectedSearchText(text){
+    return {
+        type: 'SEARCH_TEXT',
+        payload: text
+    }
+}
+
+export function getSelectedColorList(color){ 
+    return {
+        type: 'STORE_COLOR',
+        payload: color
+    }
+}
+
+export function getSelectedShapeList(shape){
+    return {
+        type: 'STORE_SHAPE',
+        payload: shape
+    }
+}
+
+export function getSelectedSizeList(size){
+    return {
+        type: 'STORE_SIZE',
+        payload: size
+    }
+}
+
+export function createPost(postData){ 
+    const color = postData.colorId.length > 0 ? `&color=`+ postData.colorId.toString() : "";
+    const shape = postData.shapeId.length > 0 ? `&shape=` + postData.shapeId.toString() : "";
+    const size = postData.sizeId.length > 0 ? `&size=` + postData.sizeId.toString() : "";
+    return axios.get( configData.SERVER_URL + `/planets?q=`+ postData.searchText + color + shape + size);
+    //return axios.get( configData.SERVER_URL + `/planets?q=`+ postData.searchText)
 }
