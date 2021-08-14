@@ -1,13 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'IBM Plex Sans', sans-serif;
+  background: white;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1,h2,h3,h4,h5,h6{
+  margin: 0;
+  line-height: 1;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container{
+  width: 1140px;
+  margin: 0 auto;
+  height: 100%; 
+  border-left: 1px solid #bfbfbf;
+  border-right: 1px solid #bfbfbf;
+  padding: 5rem;
+}
+
+.top{
+  width: 100%;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
+}
+ 
+.body-container{
+  width: 100%;
+  height: 100%;
+  padding-top: 2rem;
+  display: flex;
+}
+
+.left-panel{
+  width: 17rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #bfbfbf;
+}
+
+.color-container{
+  display: flex;
+  flex-direction: column;
+}
+
+.ant-checkbox-group{ 
+  flex-direction: column;
+  padding: 1rem 0;
+}
+
+.header-text{
+  font-weight: 700;
+}
+
+.right-side-panel{
+  margin-right: 3rem;
+  padding-left: 3rem;
+  width: 100%;
+}
+
+.result-container{
+  width: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+
+.outer-div-container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.secondary-text{
+  border-bottom: 1px solid #bfbfbf;
+  padding-bottom: 0.3rem;
+  margin-bottom: 1.4rem;
+  color: #474444;
+}
+
+.result-name{
+  font-weight: 700;
+  margin-bottom: 0.3rem;
 }
