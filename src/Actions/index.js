@@ -1,9 +1,7 @@
-import axios from "axios";
-import { func } from "prop-types";
+import axios from "axios"; 
 import configData  from "../config.json";
 
-export function loadColor(){
-    console.log(configData.SERVER_URL);
+export function loadColor(){ 
     return(dispatch)=>{
         return axios.get(configData.SERVER_URL+`/colors`).then((response)=>{
             dispatch(colorsList(response.data));
@@ -77,23 +75,20 @@ export function planetList(planet){
 
 export function createPostAction(postData){
     return dispatch => {
-        createPost(postData).then(response => {
-            console.log(response.data); 
+        createPost(postData).then(response => { 
             dispatch(SearchResult(response.data));
         });
     }
 }
 
 export function SearchResult(response){
-    
     return {
         type: 'SEARCH_RESULT',
         payload: response
     }
 }
 
-export function SetSelectedSearchText(text){
-    debugger;
+export function SetSelectedSearchText(text){ 
     return {
         type: 'SEARCH_TEXT',
         payload: text
@@ -125,6 +120,5 @@ export function createPost(postData){
     const color = postData.colorId.length > 0 ? `&color=`+ postData.colorId.toString() : "";
     const shape = postData.shapeId.length > 0 ? `&shape=` + postData.shapeId.toString() : "";
     const size = postData.sizeId.length > 0 ? `&size=` + postData.sizeId.toString() : "";
-    return axios.get( configData.SERVER_URL + `/planets?q=`+ postData.searchText + color + shape + size);
-    //return axios.get( configData.SERVER_URL + `/planets?q=`+ postData.searchText)
+    return axios.get( configData.SERVER_URL + `/planets?q=`+ postData.searchText + color + shape + size); 
 }

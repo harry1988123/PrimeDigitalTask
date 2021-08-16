@@ -1,9 +1,7 @@
-import changeTheNumber  from "./upDown";
 import fetchThings from "./fetchData";
 import { combineReducers } from "redux";
 
-const rootReducer = combineReducers({
-    changeTheNumber,
+const rootReducer = combineReducers({ 
     fetchThings
 });
 
