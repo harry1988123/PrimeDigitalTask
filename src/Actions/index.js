@@ -85,6 +85,7 @@ export function createPostAction(postData){
 }
 
 export function SearchResult(response){
+    
     return {
         type: 'SEARCH_RESULT',
         payload: response
@@ -92,6 +93,7 @@ export function SearchResult(response){
 }
 
 export function getSelectedSearchText(text){
+    debugger;
     return {
         type: 'SEARCH_TEXT',
         payload: text

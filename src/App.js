@@ -1,8 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { createPostAction, getSelectedShapeList, getSelectedSizeList, getSelectedColorList, SearchResult  } from './Actions/index';
-import { Input, Space, Checkbox } from 'antd';
-import { AudioOutlined } from '@ant-design/icons';
+import { createPostAction, getSelectedShapeList, getSelectedSizeList, getSelectedColorList, SearchResult,getSelectedSearchText  } from './Actions/index';
+import { Input, Space, Checkbox } from 'antd'; 
 import store from './store';
 import _ from 'lodash';
 
@@ -14,6 +13,7 @@ const App = ()=>{
   const [SelectedShapeList, SetShape] = useState([]);
   const [outPutResult, setOutPutResult] = useState([]);
   function onSearch(value){
+    dispatch(getSelectedSearchText(value));
     setSearchText(value); //PostRequest();
   }
   const { Search } = Input; 
@@ -64,11 +64,14 @@ const App = ()=>{
     dispatch(createPostAction(postData));
     store.dispatch({type: 'SEARCH_RESULT'}); 
     console.log(myState.searchResult); 
-    setOutPutResult(myState.searchResult)
+    
+    setOutPutResult(myState.searchResult);
   } 
 
   useEffect(() =>{ 
-    PostRequest()
+    if(SearchText != ""){
+      PostRequest();
+    }    
   },[SearchText,SelectedColorList,SelectedShapeList,SelectedSizeList]);
 
  return (

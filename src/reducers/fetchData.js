@@ -1,6 +1,6 @@
 const initialState =  {};
 
-const fetchThings = (state = initialState, action) =>{
+const fetchThings = (state = initialState, action) =>{ 
     switch(action.type){
         case 'COLOR': return { ...state, color: action.payload }
         case 'SHAPE': return { ...state, shape: action.payload } 
