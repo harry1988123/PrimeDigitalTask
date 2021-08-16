@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { createPostAction, getSelectedShapeList, getSelectedSizeList, getSelectedColorList, SearchResult,getSelectedSearchText  } from './Actions/index';
+import { createPostAction, SetSelectedShapeList, SetSelectedColorList, SearchResult, SetSelectedSearchText  } from './Actions/index';
 import { Input, Space, Checkbox } from 'antd'; 
 import store from './store';
 import _ from 'lodash';
@@ -13,8 +13,8 @@ const App = ()=>{
   const [SelectedShapeList, SetShape] = useState([]);
   const [outPutResult, setOutPutResult] = useState([]);
   function onSearch(value){
-    dispatch(getSelectedSearchText(value));
-    setSearchText(value); //PostRequest();
+    dispatch(SetSelectedSearchText(value));
+    setSearchText(value); 
   }
   const { Search } = Input; 
   let colorList = [];
@@ -40,19 +40,18 @@ const App = ()=>{
   }
 
   function onChangeColor(checkedValues) { 
-    SetColors(checkedValues); 
-    //PostRequest();
+    dispatch(SetSelectedColorList(checkedValues));
+    SetColors(checkedValues);  
   }
 
   function onChangeShape(checkedValues){ 
-    SetShape(checkedValues); 
-    //PostRequest();
+    dispatch(SetSelectedShapeList(checkedValues));
+    SetShape(checkedValues);  
   }
 
   const [SelectedSizeList, SetSize] = useState([]);
   function onChangeSize(checkedValues){ 
-    SetSize(checkedValues); 
-    //PostRequest();
+    SetSize(checkedValues);  
   }
   function PostRequest(){ 
     const postData ={
@@ -62,9 +61,7 @@ const App = ()=>{
       'sizeId': SelectedSizeList
     }    
     dispatch(createPostAction(postData));
-    store.dispatch({type: 'SEARCH_RESULT'}); 
-    console.log(myState.searchResult); 
-    
+    store.dispatch({type: 'SEARCH_RESULT'});      
     setOutPutResult(myState.searchResult);
   } 
 
@@ -106,7 +103,7 @@ const App = ()=>{
               <div className="result-container">
                 {
                   myState.searchResult != undefined ?  myState.searchResult.map(result => (<div className="outer-div-container"><div className="result-name"> { result.name } </div> 
-                  <div className="secondary-text"> { result.name } have Blue color and Round shape </div></div>)) : ""
+                  <div className="secondary-text"> { result.name } have { _.filter(myState.color, {'id': result.color })[0]["name"] } color and { _.filter(myState.shape, {'id': result.shape})[0]["name"] } shape </div></div>)) : ""
                 }
               </div>
           </div>

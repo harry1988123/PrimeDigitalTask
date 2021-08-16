@@ -92,7 +92,7 @@ export function SearchResult(response){
     }
 }
 
-export function getSelectedSearchText(text){
+export function SetSelectedSearchText(text){
     debugger;
     return {
         type: 'SEARCH_TEXT',
@@ -100,14 +100,14 @@ export function getSelectedSearchText(text){
     }
 }
 
-export function getSelectedColorList(color){ 
+export function SetSelectedColorList(color){ 
     return {
         type: 'STORE_COLOR',
         payload: color
     }
 }
 
-export function getSelectedShapeList(shape){
+export function SetSelectedShapeList(shape){
     return {
         type: 'STORE_SHAPE',
         payload: shape
